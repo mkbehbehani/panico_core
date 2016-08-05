@@ -1,0 +1,34 @@
+<h2>Listing releases</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Link</th>
+      <th>Upvotes</th>
+      <th>Downvotes</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for release <- @releases do %>
+    <tr>
+      <td><%= release.name %></td>
+      <td><%= release.description %></td>
+      <td><%= release.link %></td>
+      <td><%= release.upvotes %></td>
+      <td><%= release.downvotes %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: release_path(@conn, :show, release), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: release_path(@conn, :edit, release), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: release_path(@conn, :delete, release), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New release", to: release_path(@conn, :new) %>

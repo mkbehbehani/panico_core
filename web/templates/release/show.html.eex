@@ -1,0 +1,33 @@
+<h2>Show release</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @release.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @release.description %>
+  </li>
+
+  <li>
+    <strong>Link:</strong>
+    <%= @release.link %>
+  </li>
+
+  <li>
+    <strong>Upvotes:</strong>
+    <%= @release.upvotes %>
+  </li>
+
+  <li>
+    <strong>Downvotes:</strong>
+    <%= @release.downvotes %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: release_path(@conn, :edit, @release) %>
+<%= link "Back", to: release_path(@conn, :index) %>
