@@ -2,7 +2,7 @@ defmodule PanicoCore.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", PanicoCore.RoomChannel
+  channel "releases:*", PanicoCore.ReleasesChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
