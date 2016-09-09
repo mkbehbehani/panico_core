@@ -22,4 +22,9 @@ defmodule PanicoCore.ReleasesChannel do
     PanicoCore.Endpoint.broadcast("releases:all", "new_release", payload)
   end
 
+  def broadcast_deleted_release(rel) do
+    payload = Phoenix.View.render(PanicoCore.ReleaseView, "release.json", %{release: rel})
+    PanicoCore.Endpoint.broadcast("releases:all", "deleted_release", payload)
+  end
+
 end

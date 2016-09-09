@@ -66,6 +66,11 @@ channel.join()
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 // channel.on("new_release", rel => { console.log("New release", rel) } )
-channel.on("new_release", rel => {$(".container").append(`<p>From websocket: Name: ${rel.name}, Description: "${rel.description}", upvotes: ${rel.upvotes}, downvotes: ${rel.downvotes}</p>`)})
-
+channel.on("new_release", rel => {$(".container").append(`<p id="release_${rel.id}">From websocket: Name: ${rel.name}, Description: "${rel.description}", upvotes: ${rel.upvotes}, downvotes: ${rel.downvotes}</p>`)})
+channel.on("deleted_release", rel => {console.log("Deletion request for " + rel)})
+// channel.on("deleted_release", id => {
+//   const id = `release_${id}`;
+//   console.log("Deletion request for " + id)
+//   $(id).remove;
+// })
 export default socket

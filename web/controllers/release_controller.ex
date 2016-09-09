@@ -54,6 +54,7 @@ defmodule PanicoCore.ReleaseController do
 
   def delete(conn, %{"id" => id}) do
     release = Repo.get!(Release, id)
+    PanicoCore.ReleasesChannel.broadcast_deleted_release(release)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).

@@ -3,6 +3,7 @@ defmodule PanicoCore.ReleaseView do
 
   def render("release.json", %{release: rel}) do
     %{
+      id: rel.id,
       name: rel.name,
       description: rel.description,
       upvotes: rel.upvotes,
