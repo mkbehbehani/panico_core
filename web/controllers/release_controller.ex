@@ -18,6 +18,7 @@ defmodule PanicoCore.ReleaseController do
 
     case Repo.insert(changeset) do
       {:ok, _release} ->
+        PanicoCore.ReleasesChannel.broadcast_new_release(_release)
         conn
         |> put_flash(:info, "Release created successfully.")
         |> redirect(to: release_path(conn, :index))

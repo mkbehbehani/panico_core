@@ -56,7 +56,16 @@ socket.connect()
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("releases:all", {})
 channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("ok", ({releases}) => {
+    console.log("Joined successfully")
+    releases.forEach(rel =>
+      $(".container").append(`<p>From websocket: Name: ${rel.name}, Description: "${rel.description}", upvotes: ${rel.upvotes}, downvotes: ${rel.downvotes}</p>`)
+    )
+    console.log(releases)
+  })
   .receive("error", resp => { console.log("Unable to join", resp) })
-channel.on("ping", ({count}) => console.log("Ping from panico: " + count))
+
+// channel.on("new_release", rel => { console.log("New release", rel) } )
+channel.on("new_release", rel => {$(".container").append(`<p>From websocket: Name: ${rel.name}, Description: "${rel.description}", upvotes: ${rel.upvotes}, downvotes: ${rel.downvotes}</p>`)})
+
 export default socket

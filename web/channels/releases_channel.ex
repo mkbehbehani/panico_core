@@ -3,8 +3,12 @@ defmodule PanicoCore.ReleasesChannel do
 
   def join("releases:" <>  releases_id, _params, socket) do
     :timer.send_interval(1_000, :ping)
-    {:ok, socket}
+    releases = Repo.all(PanicoCore.Release)
+    resp = %{releases: Phoenix.View.render_many(releases, PanicoCore.ReleaseView, "release.json")}
+    {:ok, resp, socket}
   end
+
+
 
   def handle_info(:ping, socket) do
     count=socket.assigns[:count] || 1
@@ -12,4 +16,10 @@ defmodule PanicoCore.ReleasesChannel do
 
     {:noreply, assign(socket, :count, count + 1)}
   end
+
+  def broadcast_new_release(rel) do
+    payload = Phoenix.View.render(PanicoCore.ReleaseView, "release.json", %{release: rel})
+    PanicoCore.Endpoint.broadcast("releases:all", "new_release", payload)
+  end
+
 end
