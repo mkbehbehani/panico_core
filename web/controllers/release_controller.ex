@@ -44,6 +44,7 @@ defmodule PanicoCore.ReleaseController do
 
     case Repo.update(changeset) do
       {:ok, release} ->
+        PanicoCore.ReleasesChannel.broadcast_updated_release(release)
         conn
         |> put_flash(:info, "Release updated successfully.")
         |> redirect(to: release_path(conn, :show, release))

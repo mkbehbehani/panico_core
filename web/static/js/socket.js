@@ -59,7 +59,7 @@ channel.join()
   .receive("ok", ({releases}) => {
     console.log("Joined successfully")
     releases.forEach(rel =>
-      $(".container").append(`<p>From websocket: Name: ${rel.name}, Description: "${rel.description}", upvotes: ${rel.upvotes}, downvotes: ${rel.downvotes}</p>`)
+      $(".container").append(`<p id="release_${rel.id}">From websocket: Name: ${rel.name}, Description: "${rel.description}", upvotes: ${rel.upvotes}, downvotes: ${rel.downvotes}</p>`)
     )
     console.log(releases)
   })
@@ -67,7 +67,9 @@ channel.join()
 
 // channel.on("new_release", rel => { console.log("New release", rel) } )
 channel.on("new_release", rel => {$(".container").append(`<p id="release_${rel.id}">From websocket: Name: ${rel.name}, Description: "${rel.description}", upvotes: ${rel.upvotes}, downvotes: ${rel.downvotes}</p>`)})
-channel.on("deleted_release", rel => {console.log("Deletion request for " + rel)})
+channel.on("updated_release", rel => {console.log('updated release');
+  $(`#release_${rel.id}`).replaceWith(`<p id="release_${rel.id}">From websocket: Name: ${rel.name}, Description: "${rel.description}", upvotes: ${rel.upvotes}, downvotes: ${rel.downvotes}</p>`)})
+channel.on("deleted_release", rel => {$(`#release_${rel.id}`).remove()})
 // channel.on("deleted_release", id => {
 //   const id = `release_${id}`;
 //   console.log("Deletion request for " + id)
